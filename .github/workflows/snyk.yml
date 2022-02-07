@@ -10,7 +10,9 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         image: sebsnyk/juice-shop
-        args: --org=e-corp --severity-threshold=high
+        args:
+          - --org=e-corp
+          - --severity-threshold=high
     - name: Upload result to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v1
       with:
