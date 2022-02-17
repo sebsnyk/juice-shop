@@ -1,4 +1,4 @@
-name: Docker Image CI including Snyk Security Scanning
+name: Prebuilt repo + Snyk Security Scanning
 
 on:
   push:
@@ -29,6 +29,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     
+    # - run: npm install
+    
     - run: npm i -g snyk
     - run: snyk auth ${{ secrets.SNYK_TOKEN }}
     
@@ -48,8 +50,8 @@ jobs:
       with:
         sarif_file: snyk-code.sarif
           
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag $container_image
+    # - name: Build the Docker image
+    #   run: docker build . --file Dockerfile --tag $container_image
       
     - name: Snyk Container Scanning
       run: snyk container test --org=${{ secrets.SNYK_ORG }} --file=Dockerfile --sarif-file-output=snyk-container.sarif $container_image
