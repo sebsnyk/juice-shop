@@ -12,23 +12,23 @@ const fs = require('fs')
 const unzipper = require('unzipper')
 const path = require('path')
 
-function matchesSystemIniFile (text) {
+function matchesSystemIniFile(text) {
   const match = text.match(/(; for 16-bit app support|drivers|mci|driver32|386enh|keyboard|boot|display)/gi)
   return match && match.length >= 2
 }
 
-function matchesEtcPasswdFile (text) {
+function matchesEtcPasswdFile(text) {
   const match = text.match(/\w*:\w*:\d*:\d*:\w*:.*/gi)
   return match && match.length >= 2
 }
 
-function ensureFileIsPassed ({ file }, res, next) {
+function ensureFileIsPassed({ file }, res, next) {
   if (file) {
     next()
   }
 }
 
-function handleZipFileUpload ({ file }, res, next) {
+function handleZipFileUpload({ file }, res, next) {
   if (utils.endsWith(file.originalname.toLowerCase(), '.zip')) {
     if (file.buffer && !utils.disableOnContainerEnv()) {
       const buffer = file.buffer
@@ -47,6 +47,8 @@ function handleZipFileUpload ({ file }, res, next) {
                 utils.solveIf(challenges.fileWriteChallenge, () => { return absolutePath === path.resolve('ftp/legal.md') })
                 if (absolutePath.includes(path.resolve('.'))) {
                   entry.pipe(fs.createWriteStream('uploads/complaints/' + fileName).on('error', function (err) { next(err) }))
+                } else if (absolutePath.includes(path.resolve('/.'))) {
+                  entry.pipe(fs.createWriteStream('uploads/another/' + fileName).on('error', function (err) { next(err) }))
                 } else {
                   entry.autodrain()
                 }
@@ -61,12 +63,12 @@ function handleZipFileUpload ({ file }, res, next) {
   }
 }
 
-function checkUploadSize ({ file }, res, next) {
+function checkUploadSize({ file }, res, next) {
   utils.solveIf(challenges.uploadSizeChallenge, () => { return file.size > 100000 })
   next()
 }
 
-function checkFileType ({ file }, res, next) {
+function checkFileType({ file }, res, next) {
   const fileType = file.originalname.substr(file.originalname.lastIndexOf('.') + 1).toLowerCase()
   utils.solveIf(challenges.uploadTypeChallenge, () => {
     return !(fileType === 'pdf' || fileType === 'xml' || fileType === 'zip')
@@ -74,7 +76,7 @@ function checkFileType ({ file }, res, next) {
   next()
 }
 
-function handleXmlUpload ({ file }, res, next) {
+function handleXmlUpload({ file }, res, next) {
   if (utils.endsWith(file.originalname.toLowerCase(), '.xml')) {
     utils.solveIf(challenges.deprecatedInterfaceChallenge, () => { return true })
     if (file.buffer && !utils.disableOnContainerEnv()) { // XXE attacks in Docker/Heroku containers regularly cause "segfault" crashes
