@@ -1,10 +1,15 @@
-name: Snyk Container
+name: Snyk
 on: push
 jobs:
   snyk-code:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+    - name: Install Snyk
+      run: npm install -g snyk snyk-to-html
     - name: Run Snyk Code
       run: |
         snyk code test --sarif-file-output=report.sarif
