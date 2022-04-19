@@ -9,7 +9,14 @@ jobs:
       with:
         node-version: '16'
     - name: Install Snyk
-      run: npm install -g snyk snyk-to-html
+      env:
+        # In order to use the Snyk Action you will need to have a Snyk API token.
+        # More details in https://github.com/snyk/actions#getting-your-snyk-token
+        # or you can signup for free at https://snyk.io/login
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      run: | 
+        npm install -g snyk snyk-to-html
+        snyk auth $SNYK_TOKEN
     - name: Run Snyk Code
       run: |
         snyk code test --sarif-file-output=report.sarif
