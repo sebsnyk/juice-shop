@@ -1,6 +1,22 @@
 name: Snyk Container
 on: push
 jobs:
+  snyk-code:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Snyk Code
+      run: |
+        snyk code test --sarif-file-output=report.sarif
+        SC_RET_CODE=$?
+        snyk-to-html -o report.html < report.sarif
+        exit $SC_RET_CODE
+    - uses: actions/upload-artifact@v3
+      with:
+        name: snyk-code-report
+        path: report.html
+
+
   snyk:
     runs-on: ubuntu-latest
     steps:
