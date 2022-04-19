@@ -18,6 +18,7 @@ jobs:
         npm install -g snyk snyk-to-html
         snyk auth $SNYK_TOKEN
     - name: Run Snyk Code
+      continue-on-error: true
       run: |
         snyk code test --sarif-file-output=report.sarif
         SC_RET_CODE=$?
