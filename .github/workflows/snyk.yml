@@ -22,6 +22,7 @@ jobs:
       run: |
         snyk code test --sarif-file-output=report.sarif
         SC_RET_CODE=$?
+        echo "run the conversion"
         snyk-to-html -o report.html < report.sarif
         exit $SC_RET_CODE
     - uses: actions/upload-artifact@v3
