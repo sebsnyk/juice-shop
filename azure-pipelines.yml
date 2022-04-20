@@ -6,6 +6,8 @@
 #   # todo: set this you your own pool as applicable.
 #   vmImage: ubuntu-latest
 
+pool: sebsnyk.pool
+
 steps:
   - checkout: self
   - task: NodeTool@0
