@@ -35,6 +35,7 @@ steps:
     displayName: 'snyk install & auth'
   - script: |
       snyk test --sarif-file-output=CodeAnalysisLogs/snyk-open-source.sarif
+    continueOnError: true
     displayName: 'snyk test'
   - task: PublishBuildArtifacts@1
     displayName: "Publish Artifact: CodeAnalysisLogs"
