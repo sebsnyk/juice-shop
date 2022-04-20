@@ -33,12 +33,24 @@ steps:
       npm install -g snyk snyk-to-html -g
       snyk auth $(SNYK_TOKEN)
     displayName: 'snyk install & auth'
-  - script: |
-      snyk test --sarif-file-output=CodeAnalysisLogs/snyk-open-source.sarif
+  # snyk open source
+  - script: snyk test --sarif-file-output=CodeAnalysisLogs/snyk-open-source.sarif
     continueOnError: true
     displayName: 'snyk test'
+
+  # snyk code
+  - script: snyk code test --sarif-file-output=CodeAnalysisLogs/snyk-code.sarif
+    continueOnError: true
+    displayName: 'snyk code test'
+
+  # snyk iac
+  - script: snyk iac test --sarif-file-output=CodeAnalysisLogs/snyk-iac.sarif
+    continueOnError: true
+    displayName: 'snyk iac test'
+
   - task: PublishBuildArtifacts@1
     displayName: "Publish Artifact: CodeAnalysisLogs"
+    condition: succeededOrFailed()
     inputs:
       PathtoPublish: $(Build.SourcesDirectory)/CodeAnalysisLogs
       ArtifactName: CodeAnalysisLogs
