@@ -35,15 +35,15 @@ steps:
 
   # snyk open source
   - script: |
-      snyk test --sarif-file-output=results.sarif
+      snyk test --json-file-output=results.json
       RESULT=$?
-      snyk-to-html -o html/results-open-source.html < results.sarif
+      snyk-to-html -o html/results-open-source.html < results.json
       exit $RESULT
     continueOnError: true
     displayName: 'snyk open source'
 
   # snyk container
-  # NOTE: Change this to your container name
+  # NOTE: Change the image name
   - script: |
       snyk container test sebsnyk/juice-shop --file=Dockerfile --sarif-file-output=results.sarif
       RESULT=$?
