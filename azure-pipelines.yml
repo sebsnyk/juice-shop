@@ -33,7 +33,7 @@ steps:
     continueOnError: true
     displayName: 'snyk code'
 
-  # snyk code
+  # snyk open source
   - script: |
       snyk test --sarif-file-output=results.sarif
       RESULT=$?
@@ -42,16 +42,24 @@ steps:
     continueOnError: true
     displayName: 'snyk open source'
 
-  # # snyk container
-  # # NOTE: Change this to your container name
-  # - script: snyk container test sebsnyk/juice-shop --file=Dockerfile --sarif-file-output=CodeAnalysisLogs/snyk-container.sarif
-  #   continueOnError: true
-  #   displayName: 'snyk container'
+  # snyk container
+  # NOTE: Change this to your container name
+  - script: |
+      snyk container test sebsnyk/juice-shop --file=Dockerfile --sarif-file-output=results.sarif
+      RESULT=$?
+      snyk-to-html -o html/results-container.html < results.sarif
+      exit $RESULT
+    continueOnError: true
+    displayName: 'snyk container'
 
-  # # snyk iac
-  # - script: snyk iac test --sarif-file-output=CodeAnalysisLogs/snyk-iac.sarif
-  #   continueOnError: true
-  #   displayName: 'snyk iac'
+  # snyk iac
+  - script: |
+      snyk iac test --sarif-file-output=results.sarif
+      RESULT=$?
+      snyk-to-html -o html/results-iac.html
+      exit $RESULT
+    continueOnError: true
+    displayName: 'snyk iac'
 
   # publish the results
   - task: PublishHtmlReport@1
@@ -63,3 +71,13 @@ steps:
     inputs:
       reportDir: 'html/results-open-source.html'
       tabName: 'Snyk Open Source'
+
+  - task: PublishHtmlReport@1
+    inputs:
+      reportDir: 'html/results-container.html'
+      tabName: 'Snyk Container'
+
+  - task: PublishHtmlReport@1
+    inputs:
+      reportDir: 'html/results-iac.html'
+      tabName: 'Snyk IaC'
