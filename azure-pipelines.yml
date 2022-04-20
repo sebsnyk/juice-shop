@@ -29,18 +29,15 @@ steps:
   # #       /home/vsts/work/_temp/snyk-linux code test --severity-threshold=low --sarif-file-output=CodeAnalysisLogs/snyk-code.sarif
         
   # #       exit 0
-  # - task: PublishBuildArtifacts@1
-  #   displayName: "Publish Artifact: CodeAnalysisLogs"
-  #   inputs:
-  #     PathtoPublish: $(Build.SourcesDirectory)/CodeAnalysisLogs
-  #     ArtifactName: CodeAnalysisLogs
   - script: |
       npm install -g snyk snyk-to-html -g
+      snyk auth $(SNYK_TOKEN)
     displayName: 'snyk install & auth'
   - script: |
-      snyk auth $(SNYK_TOKEN)
-      snyk monitor
-      snyk test --json | snyk-to-html -o results.html
+      snyk test --sarif-file-output=CodeAnalysisLogs/snyk-open-source.sarif
     displayName: 'snyk test'
-  # env:
-  #   SNYK_TOKEN: $(SNYK_TOKEN) # the recommended way to map to an env variable
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact: CodeAnalysisLogs"
+    inputs:
+      PathtoPublish: $(Build.SourcesDirectory)/CodeAnalysisLogs
+      ArtifactName: CodeAnalysisLogs
