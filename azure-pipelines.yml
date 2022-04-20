@@ -36,5 +36,5 @@ jobs:
         inputs:
           PathtoPublish: $(Build.SourcesDirectory)/CodeAnalysisLogs
           ArtifactName: CodeAnalysisLogs
-    env:
-      SNYK_TOKEN: $(SNYK_TOKEN) # the recommended way to map to an env variable
+      env:
+        SNYK_TOKEN: $(SNYK_TOKEN) # the recommended way to map to an env variable
