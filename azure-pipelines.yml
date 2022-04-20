@@ -17,7 +17,7 @@ steps:
   # install & prepare snyk
   - script: |
       npm install -g snyk snyk-to-html
-      mkdir html-reports
+      mkdir html
       snyk auth $(SNYK_TOKEN)
 
       # explicitly allow scripts to continue if errors occur
@@ -28,7 +28,7 @@ steps:
   - script: |
       snyk code test --sarif-file-output=results.sarif
       RESULT=$?
-      snyk-to-html -o $(ResultsPath)/results-code.html < results.sarif
+      snyk-to-html -o html/results-code.html < results.sarif
     continueOnError: true
     displayName: 'snyk code'
 
@@ -52,4 +52,4 @@ steps:
   - task: PublishHtmlReport@1
     displayName: 'Publish HTML results'
     inputs:
-      reportDir: '$(ResultsPath)'
+      reportDir: 'html'
