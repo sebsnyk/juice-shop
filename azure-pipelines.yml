@@ -14,12 +14,9 @@ jobs:
         inputs:
           versionSpec: 16
       # ... build your projects here, if needed.
-      - task: CmdLine@2
-        displayName: Installing & Authenticating Snyk
-        inputs:
-          script: >-
-            npm install -g snyk snyk-to-html
-            snyk auth $SNYK_TOKEN
+      - bash: |
+          npm install -g snyk snyk-to-html
+          snyk auth $SNYK_TOKEN
       # - task: CmdLine@2
       #   displayName: Snyk static code analysis
       #   inputs:
