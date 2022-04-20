@@ -56,7 +56,7 @@ steps:
   - script: |
       snyk iac test --sarif-file-output=results.sarif
       RESULT=$?
-      snyk-to-html -o html/results-iac.html
+      snyk-to-html -o html/results-iac.html < results.sarif
       exit $RESULT
     continueOnError: true
     displayName: 'snyk iac'
