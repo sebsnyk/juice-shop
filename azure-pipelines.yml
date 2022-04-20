@@ -52,4 +52,4 @@ steps:
   - task: PublishHtmlReport@1
     displayName: 'Publish HTML results'
     inputs:
-      reportDir: 'html'
+      reportDir: 'html/results-code.html'
