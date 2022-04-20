@@ -29,13 +29,18 @@ steps:
       snyk code test --sarif-file-output=results.sarif
       RESULT=$?
       snyk-to-html -o html/results-code.html < results.sarif
+      exit $RESULT
     continueOnError: true
     displayName: 'snyk code'
 
-  # # snyk open source
-  # - script: snyk test --sarif-file-output=CodeAnalysisLogs/snyk-open-source.sarif
-  #   continueOnError: true
-  #   displayName: 'snyk open source'
+  # snyk code
+  - script: |
+      snyk test --sarif-file-output=results.sarif
+      RESULT=$?
+      snyk-to-html -o html/results-open-source.html < results.sarif
+      exit $RESULT
+    continueOnError: true
+    displayName: 'snyk open source'
 
   # # snyk container
   # # NOTE: Change this to your container name
@@ -50,6 +55,11 @@ steps:
 
   # publish the results
   - task: PublishHtmlReport@1
-    displayName: 'Publish HTML results'
     inputs:
       reportDir: 'html/results-code.html'
+      tabName: 'Snyk Code'
+
+  - task: PublishHtmlReport@1
+    inputs:
+      reportDir: 'html/results-open-source.html'
+      tabName: 'Snyk Open Source'
