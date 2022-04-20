@@ -45,18 +45,18 @@ steps:
   # snyk container
   # NOTE: Change the image name
   - script: |
-      snyk container test sebsnyk/juice-shop --file=Dockerfile --sarif-file-output=results.sarif
+      snyk container test sebsnyk/juice-shop --file=Dockerfile --json-file-output=results.json
       RESULT=$?
-      snyk-to-html -o html/results-container.html < results.sarif
+      snyk-to-html -o html/results-container.html < results.json
       exit $RESULT
     continueOnError: true
     displayName: 'snyk container'
 
   # snyk iac
   - script: |
-      snyk iac test --sarif-file-output=results.sarif
+      snyk iac test --json-file-output=results.json
       RESULT=$?
-      snyk-to-html -o html/results-iac.html < results.sarif
+      snyk-to-html -o html/results-iac.html < results.json
       exit $RESULT
     continueOnError: true
     displayName: 'snyk iac'
