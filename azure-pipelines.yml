@@ -2,36 +2,42 @@
 # Set a SNYK_TOKEN in the pipelines secrets
 
 
-jobs:
-  - job: Job_1
-    displayName: Agent job 1
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-      - checkout: self
-      - task: NodeTool@0
-        displayName: Use Node version 16
-        inputs:
-          versionSpec: 16
-      # ... build your projects here, if needed.
-      - bash: |
-          npm install -g snyk snyk-to-html
-          snyk auth $SNYK_TOKEN
-      # - task: CmdLine@2
-      #   displayName: Snyk static code analysis
-      #   inputs:
-      #     script: >-
-      #       /home/vsts/work/_temp/snyk-linux auth $(SNYK_TOKEN)
-            
-      #       mkdir CodeAnalysisLogs
-            
-      #       /home/vsts/work/_temp/snyk-linux code test --severity-threshold=low --sarif-file-output=CodeAnalysisLogs/snyk-code.sarif
-            
-      #       exit 0
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact: CodeAnalysisLogs"
-        inputs:
-          PathtoPublish: $(Build.SourcesDirectory)/CodeAnalysisLogs
-          ArtifactName: CodeAnalysisLogs
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - checkout: self
+  - task: NodeTool@0
+    displayName: Use Node version 16
+    inputs:
+      versionSpec: 16
+  # ... build your projects here, if needed.
+  # - bash: |
+  #     npm install -g snyk snyk-to-html
+  #     snyk auth $SNYK_TOKEN
+  # # - task: CmdLine@2
+  # #   displayName: Snyk static code analysis
+  # #   inputs:
+  # #     script: >-
+  # #       /home/vsts/work/_temp/snyk-linux auth $(SNYK_TOKEN)
+        
+  # #       mkdir CodeAnalysisLogs
+        
+  # #       /home/vsts/work/_temp/snyk-linux code test --severity-threshold=low --sarif-file-output=CodeAnalysisLogs/snyk-code.sarif
+        
+  # #       exit 0
+  # - task: PublishBuildArtifacts@1
+  #   displayName: "Publish Artifact: CodeAnalysisLogs"
+  #   inputs:
+  #     PathtoPublish: $(Build.SourcesDirectory)/CodeAnalysisLogs
+  #     ArtifactName: CodeAnalysisLogs
+  - script: |
+      npm install -g snyk snyk-to-html -g
+    displayName: 'snyk install & auth'
+  - script: |
+      snyk auth $(SNYK_TOKEN)
+      snyk monitor
+      snyk test --json | snyk-to-html -o results.html
+    displayName: 'snyk test'
       env:
         SNYK_TOKEN: $(SNYK_TOKEN) # the recommended way to map to an env variable
