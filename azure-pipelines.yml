@@ -2,8 +2,9 @@
 # Set a SNYK_TOKEN in the pipelines secrets
 
 
-pool:
-  vmImage: ubuntu-latest
+# pool:
+#   # todo: set this you your own pool as applicable.
+#   vmImage: ubuntu-latest
 
 steps:
   - checkout: self
