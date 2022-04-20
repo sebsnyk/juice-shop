@@ -1,0 +1,50 @@
+trigger:
+  branches:
+    include:
+      - refs/heads/master
+jobs:
+  - job: Job_1
+    displayName: Agent job 1
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - checkout: self
+      - task: Bash@3
+        displayName: Build extensions
+        inputs:
+          targetType: inline
+          script: >-
+            if [ -f extensions.csproj ]
+            
+            then
+                dotnet build extensions.csproj --output ./bin
+            fi
+      - task: NodeTool@0
+        displayName: Use Node version 10.14.1
+        inputs:
+          versionSpec: 10.14.1
+      - task: Npm@1
+        displayName: npm install
+        inputs:
+          verbose: false
+      - task: SnykSecurityScan@1
+        displayName: Snyk scan for open source vulnerabilities (open source dependencies)
+        inputs:
+          serviceConnectionEndpoint: df8efbfd-45e3-4582-91d8-4d17d61d6d60
+          failOnIssues: false
+      - task: CmdLine@2
+        displayName: Snyk static code analysis
+        inputs:
+          script: >-
+            /home/vsts/work/_temp/snyk-linux auth $(SNYK_TOKEN)
+            
+            mkdir CodeAnalysisLogs
+            
+            /home/vsts/work/_temp/snyk-linux code test --severity-threshold=low --sarif-file-output=CodeAnalysisLogs/snyk-code.sarif
+            
+            exit 0
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: CodeAnalysisLogs"
+        inputs:
+          PathtoPublish: $(Build.SourcesDirectory)/CodeAnalysisLogs
+          ArtifactName: CodeAnalysisLogs
