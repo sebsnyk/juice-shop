@@ -26,7 +26,7 @@ jobs:
         set +e
       displayName: 'snyk install & auth'
 
-- job: Run Snyk
+- job: Snyk
   steps:
     # snyk code
     - script: |
@@ -65,7 +65,7 @@ jobs:
       continueOnError: true
       displayName: 'snyk iac'
 
-- job: Publish Results
+- job: Publish
   steps:
     - task: PublishHtmlReport@1
       condition: succeededOrFailed()
