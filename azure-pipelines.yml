@@ -26,9 +26,9 @@ steps:
 
   # snyk code
   - script: |
-      snyk code test --org=e-corp --sarif-file-output=results.sarif
+      snyk code test --sarif-file-output=results.sarif
       RESULT=$?
-      snyk-to-html -o $env:BUILD_ARTIFACTSTAGINGDIRECTORY/results-code.html < results.sarif
+      snyk-to-html -o $(Build.ArtifactStagingDirectory)/results-code.html < results.sarif
       exit $RESULT
     continueOnError: true
     displayName: 'snyk code'
@@ -37,7 +37,7 @@ steps:
   - script: |
       snyk test --json-file-output=results.json
       RESULT=$?
-      snyk-to-html -o $env:BUILD_ARTIFACTSTAGINGDIRECTORY/results-open-source.html < results.json
+      snyk-to-html -o $(Build.ArtifactStagingDirectory)/results-open-source.html < results.json
       exit $RESULT
     continueOnError: true
     displayName: 'snyk open source'
@@ -47,7 +47,7 @@ steps:
   - script: |
       snyk container test sebsnyk/juice-shop --file=Dockerfile --json-file-output=results.json
       RESULT=$?
-      snyk-to-html -o $env:BUILD_ARTIFACTSTAGINGDIRECTORY/results-container.html < results.json
+      snyk-to-html -o $(Build.ArtifactStagingDirectory)/results-container.html < results.json
       exit $RESULT
     continueOnError: true
     displayName: 'snyk container'
@@ -56,7 +56,7 @@ steps:
   - script: |
       snyk iac test --json-file-output=results.json
       RESULT=$?
-      snyk-to-html -o $env:BUILD_ARTIFACTSTAGINGDIRECTORY/results-iac.html < results.json
+      snyk-to-html -o $(Build.ArtifactStagingDirectory)/results-iac.html < results.json
       exit $RESULT
     continueOnError: true
     displayName: 'snyk iac'
