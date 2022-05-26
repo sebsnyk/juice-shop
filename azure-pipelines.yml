@@ -35,7 +35,7 @@ steps:
 
   # snyk open source
   - script: |
-      snyk test --json-file-output=results.json
+      snyk test --org=e-corp --json-file-output=results.json
       RESULT=$?
       snyk-to-html -o $env:BUILD_ARTIFACTSTAGINGDIRECTORY/results-open-source.html < results.json
       exit $RESULT
