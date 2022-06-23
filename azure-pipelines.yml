@@ -89,3 +89,32 @@ steps:
     inputs:
       pathToPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: Snyk Reports
+
+  # snyk code
+  - script: snyk code test --sarif-file-output=CodeAnalysisLogs/snyk-code.sarif
+    continueOnError: true
+    displayName: 'snyk code'
+
+  # snyk open source
+  - script: snyk test --sarif-file-output=CodeAnalysisLogs/snyk-open-source.sarif
+    continueOnError: true
+    displayName: 'snyk open source'
+
+  # snyk container
+  # NOTE: Change this to your container name
+  - script: snyk container test sebsnyk/juice-shop --file=Dockerfile --sarif-file-output=CodeAnalysisLogs/snyk-container.sarif
+    continueOnError: true
+    displayName: 'snyk container'
+
+  # snyk iac
+  - script: snyk iac test --sarif-file-output=CodeAnalysisLogs/snyk-iac.sarif
+    continueOnError: true
+    displayName: 'snyk iac'
+
+  # publish the results
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact: CodeAnalysisLogs"
+    condition: succeededOrFailed()
+    inputs:
+      PathtoPublish: $(Build.SourcesDirectory)/CodeAnalysisLogs
+      ArtifactName: CodeAnalysisLogs
