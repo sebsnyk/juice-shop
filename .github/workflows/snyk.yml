@@ -38,7 +38,6 @@ jobs:
         exit $RESULT
       continue-on-error: true
     - uses: actions/upload-artifact@v3
-      if: failure()
       with:
         name: snyk-open-source
         path: results-open-source.html
