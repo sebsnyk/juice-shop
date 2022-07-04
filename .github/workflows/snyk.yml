@@ -32,6 +32,7 @@ jobs:
 
     - name: Snyk Open Source Scanning
       run: |
+        set +e
         snyk test --org=${{ secrets.SNYK_ORG }} --all-projects --json-file-output=results.json
         RESULT=$?
         snyk-to-html -o results-open-source.html < results.json
