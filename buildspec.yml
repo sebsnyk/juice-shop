@@ -27,7 +27,6 @@ phases:
       # - npm install
       # - npm test  # Run your unit tests, etc
       - ./snyk test --json | ./snyk-to-html -o results-snyk-open-source.html
-      # - ./snyk monitor --org=your-snyk-org-id
 
 
 artifacts:
