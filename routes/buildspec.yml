@@ -10,7 +10,7 @@ phases:
   install:
     commands:
       - latest_version=$(curl -Is "https://github.com/snyk/cli/releases/latest" | grep "^location" | sed 's#.*tag/##g' | tr -d "\r")
-      - snyk_cli_dl_linux="https://github.com/snyk/snyk/releases/download/${latest_version}/snyk-linux"
+      - snyk_cli_dl_linux="https://github.com/snyk/cli/releases/download/${latest_version}/snyk-linux"
       - curl -Lo ./snyk $snyk_cli_dl_linux
       - chmod +x ./snyk
 
