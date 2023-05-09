@@ -1,4 +1,5 @@
 # App
+.dccache
 node_modules/
 juiceshop.sqlite
 order_*.pdf
@@ -17,7 +18,6 @@ data/chatbot/*.*
 # TF
 secret.auto.tfvars
 **/.terraform/*
-*.tfstate
 *.tfstate.*
 override.tf
 override.tf.json
@@ -69,3 +69,4 @@ config/*.yml
 !config/tutorial.yml
 !config/oss.yml
 kubeconfig_*
+.dccache
