@@ -1,0 +1,15 @@
+pipelines:
+  default:
+    - step:
+        script:
+          - pipe: snyk/snyk-scan:0.5.2
+            variables:
+              SNYK_TOKEN: $SNYK_TOKEN
+              LANGUAGE: 'npm'
+              DONT_BREAK_BUILD: 'TRUE'
+              SEVERITY_THRESHOLD: 'high'
+              CODE_INSIGHTS_RESULTS: 'TRUE'
+              MONITOR: 'TRUE'
+              ORGANIZATION: 'bb32cc43-ec07-4f8c-93da-c82194615ac2'
+              DEBUG: 'TRUE'
+              EXTRA_ARGS: "--API=https://app.eu.snyk.io/api --all-projects"
