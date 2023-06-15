@@ -4,7 +4,7 @@ pipelines:
         script:
           - pipe: snyk/snyk-scan:0.5.2
             variables:
-              SNYK_TOKEN: $SNYK_TOKEN
+              SNYK_TOKEN: $SNYK_TOKEN_EU
               LANGUAGE: 'npm'
               DONT_BREAK_BUILD: 'TRUE'
               SEVERITY_THRESHOLD: 'high'
