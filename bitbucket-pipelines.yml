@@ -6,11 +6,11 @@ pipelines:
             variables:
               SNYK_TOKEN: '$SNYK_TOKEN_EU'
               LANGUAGE: 'npm'
-              DONT_BREAK_BUILD: 'TRUE'
+              DONT_BREAK_BUILD: 'true'
               SEVERITY_THRESHOLD: 'high'
-              CODE_INSIGHTS_RESULTS: 'TRUE'
-              MONITOR: 'TRUE'
+              CODE_INSIGHTS_RESULTS: 'true'
+              MONITOR: 'true'
               ORGANIZATION: 'bb32cc43-ec07-4f8c-93da-c82194615ac2'
-              DEBUG: 'TRUE'
+              DEBUG: 'true'
               SNYK_API: 'https://api.eu.snyk.io'
               EXTRA_ARGS: "--all-projects"
