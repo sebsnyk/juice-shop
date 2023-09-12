@@ -1,6 +1,9 @@
-name: Example workflow for Gradle using Snyk
+name: Example workflow for Snyk
+
 on: push
+
 jobs:
+
   security:
     runs-on: ubuntu-latest
     steps:
@@ -12,3 +15,31 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --all-projects
+
+  code-scan:
+    # Configure Environment
+    name: 'Snyk Code Scan'
+    runs-on: ubuntu-latest
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v1
+
+      # Install and Authenticate to Snyk
+      - name: Install Snyk & Authenticate
+        run: |
+          sudo npm install -g snyk
+          snyk auth ${SNYK_TOKEN}
+      # Run Snyk Code
+      - name: Run Snyk Code
+        run: |
+          snyk code test --sarif  > results.sarif
+        continue-on-error: true
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: results.sarif
