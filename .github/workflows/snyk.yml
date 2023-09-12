@@ -41,7 +41,7 @@ jobs:
         continue-on-error: true
       - name: Upload SARIF file
         run: |
-          DATA=gzip -c analysis-data.sarif | base64 -w0
+          DATA=`gzip -c results.sarif | base64 -w0`
           curl -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
