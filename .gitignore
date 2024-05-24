@@ -1,4 +1,5 @@
 # App
+.dccache
 node_modules/
 juiceshop.sqlite
 order_*.pdf
@@ -68,4 +69,3 @@ config/*.yml
 !config/tutorial.yml
 !config/oss.yml
 kubeconfig_*
-.dccache
