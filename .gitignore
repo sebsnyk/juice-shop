@@ -1,5 +1,4 @@
 # App
-.dccache
 node_modules/
 juiceshop.sqlite
 order_*.pdf

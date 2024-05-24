@@ -55,20 +55,17 @@ overview please visit the official project page:
 
 ## Table of contents
 
-- [!Juice Shop Logo OWASP Juice Shop](#-owasp-juice-shop)
-  - [Table of contents](#table-of-contents)
-  - [Demo](#demo)
-  - [Documentation](#documentation)
-    - [Node.js version compatibility](#nodejs-version-compatibility)
-    - [Troubleshooting](#troubleshooting)
-    - [Official companion guide](#official-companion-guide)
-  - [Contributing](#contributing)
-  - [References](#references)
-  - [Merchandise](#merchandise)
-  - [Donations](#donations)
-  - [Contributors](#contributors)
-  - [Licensing](#licensing)
-
+- [Demo](#demo)
+- [Documentation](#documentation)
+  - [Node.js version compatibility](#nodejs-version-compatibility)
+  - [Troubleshooting](#troubleshooting)
+  - [Official companion guide](#official-companion-guide)
+- [Contributing](#contributing)
+- [References](#references)
+- [Merchandise](#merchandise)
+- [Donations](#donations)
+- [Contributors](#contributors)
+- [Licensing](#licensing)
 
 ## Demo
 
@@ -226,4 +223,3 @@ under the terms of the [MIT license](LICENSE). OWASP Juice Shop and any
 contributions are Copyright © by Bjoern Kimminich 2014-2021.
 
 ![Juice Shop Logo](https://raw.githubusercontent.com/bkimminich/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_400px.png)
-
