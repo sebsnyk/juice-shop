@@ -55,17 +55,19 @@ overview please visit the official project page:
 
 ## Table of contents
 
-- [Demo](#demo)
-- [Documentation](#documentation)
-  - [Node.js version compatibility](#nodejs-version-compatibility)
-  - [Troubleshooting](#troubleshooting)
-  - [Official companion guide](#official-companion-guide)
-- [Contributing](#contributing)
-- [References](#references)
-- [Merchandise](#merchandise)
-- [Donations](#donations)
-- [Contributors](#contributors)
-- [Licensing](#licensing)
+- [!Juice Shop Logo OWASP Juice Shop](#-owasp-juice-shop)
+  - [Table of contents](#table-of-contents)
+  - [Demo](#demo)
+  - [Documentation](#documentation)
+    - [Node.js version compatibility](#nodejs-version-compatibility)
+    - [Troubleshooting](#troubleshooting)
+    - [Official companion guide](#official-companion-guide)
+  - [Contributing](#contributing)
+  - [References](#references)
+  - [Merchandise](#merchandise)
+  - [Donations](#donations)
+  - [Contributors](#contributors)
+  - [Licensing](#licensing)
 
 ## Demo
 

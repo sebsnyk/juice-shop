@@ -159,6 +159,7 @@
     "sqlite3": "^5.0.0",
     "svg-captcha": "^1.4.0",
     "swagger-ui-express": "^4.1.4",
+    "tinymce": "^4.1.2",
     "unzipper": "0.9.15",
     "winston": "^3.3.3",
     "yaml-schema-validator": "^1.2.2",
