@@ -1,0 +1,31 @@
+# .github/codeql/codeql-config.yml
+# Example configuration file for CodeQL JavaScript analysis.
+# Note: Debug logging verbosity is set in the workflow file's 'init' step.
+
+name: "Debug JS CodeQL Configuration"
+
+# You can explicitly define query suites here.
+# If omitted, the 'init' action often defaults to 'security-extended'.
+# Using 'security-and-quality' includes more checks, which might be useful during debugging.
+queries:
+  - uses: security-and-quality # Includes security-extended plus maintainability/reliability
+
+# Use 'paths' to explicitly include directories if CodeQL isn't finding expected code.
+# paths:
+#   - src
+#   - lib
+
+# Use 'paths-ignore' to exclude specific files/directories.
+# This can sometimes help isolate issues or speed up debugging scans.
+paths-ignore:
+  - '**/node_modules/**'
+  - '**/*.min.js'
+  - '**/dist/**'
+  - '**/build/**'
+  - '**/coverage/**'
+  - '**/*.test.js'
+  - '**/*.spec.js'
+  - 'vendor/**'
+
+# There are no specific keys *within this config file* to enable debug logging levels
+# for the overall CodeQL Action process. That's done in the workflow file.
