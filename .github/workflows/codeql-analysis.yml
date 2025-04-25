@@ -1,0 +1,38 @@
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript' ] # Define the language to analyze
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3 # Use the latest appropriate version (e.g., v3)
+      with:
+        languages: ${{ matrix.language }}
+        # Reference your config file (optional, but good practice)
+        config-file: ./.github/codeql/codeql-config.yml
+        # --- THIS IS THE KEY LINE FOR DEBUG LOGS ---
+        debug: true
+        # -------------------------------------------
+
+    # If you were analyzing a compiled language, you would add build steps here
+    # - name: Autobuild
+    #   uses: github/codeql-action/autobuild@v3
+    # Or manual build steps
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
