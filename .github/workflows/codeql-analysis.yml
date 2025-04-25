@@ -1,3 +1,11 @@
+on:
+  # Trigger on pushes to the main branch (adjust 'main' if your default branch is different)
+  push:
+    branches: [ main, master ]
+  # Trigger on pull requests targeting the main branch
+  pull_request:
+    branches: [ main, master ]
+
 jobs:
   analyze:
     name: Analyze
