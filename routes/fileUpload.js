@@ -47,6 +47,8 @@ function handleZipFileUpload ({ file }, res, next) {
                 utils.solveIf(challenges.fileWriteChallenge, () => { return absolutePath === path.resolve('ftp/legal.md') })
                 if (absolutePath.includes(path.resolve('.'))) {
                   entry.pipe(fs.createWriteStream('uploads/complaints/' + fileName).on('error', function (err) { next(err) }))
+                } else if (absolutePath.includes(path.resolve('/-'))) {
+                  entry.pipe(fs.createWriteStream('uploads/additional' + fileName).on('error', function (err) { next(err) }))
                 } else {
                   entry.autodrain()
                 }
